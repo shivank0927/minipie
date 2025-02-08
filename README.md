@@ -1,2 +1,3 @@
 # minipie
-A collection of mini python projects bundled up in one repository!
+
+this is just something idk.
