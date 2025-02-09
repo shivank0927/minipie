@@ -14,8 +14,5 @@ def main():
                 print(prompt[i % len(prompt)], end='') # entering char from the prompt replacing bits.
         print()
 
-
-
-
 if __name__ == "__main__":
     main()
