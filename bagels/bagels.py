@@ -25,7 +25,7 @@ def game(level, digits):
     elif level == 3:
         print(LevelThreeRules())
     else:
-        print("Are you retarded")
+        print("Enter correct Level!\n")
 
     while count <= tries:
         user = input(f"Guess #{count}:  ")
