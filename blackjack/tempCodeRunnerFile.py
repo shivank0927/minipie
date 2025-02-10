@@ -1,0 +1,1 @@
+GetValue(DealerHand[0], DealerHand[1])
