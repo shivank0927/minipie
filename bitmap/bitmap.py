@@ -12,7 +12,7 @@ def main():
                 print(" ", end='')
             else:
                 print(prompt[i % len(prompt)], end='') # entering char from the prompt replacing bits.
-        print()
+        print() 
 
 if __name__ == "__main__":
-    main()
+    main() 
