@@ -19,30 +19,34 @@ def main():
                 On your first play, you can (D)ouble down to increase your bet
                 If tie occurs, the bet will be returned to the player
                 The dealer stops hitting at 17""")
+    
     money = 5000
     while True:
         if money <= 0:
             sys.exit("YOU ARE BROKE")
         
         bet = GetBet(money)
+        print(f"YOU HAVE {money} Rs.")
         deck = GetDeck()
         dealer = [deck.pop(), deck.pop()]
         player = [deck.pop(), deck.pop()]
 
         print("YOUR BET:", bet)
+
         while True:
-            ShowHand(dealer, player, False)
+            ShowHand(dealer, True)   
+            ShowHand(player, False)  
             print()
             
             if GetValue(player) > 21:
-                break
+                break  # player busted
+            
             move = GetMove(player, money - bet)
             
             if move == "D":
                 ExtraBet = GetBet(min(bet, (money - bet)))
                 bet += ExtraBet
                 print(f"Bet Increased to {bet}")
-                print(f"BET: {bet}")
             
             if move in ['H', 'D']:
                 card = deck.pop()
@@ -51,47 +55,79 @@ def main():
                 player.append(card)
 
                 if GetValue(player) > 21:
-                    continue # busted!
+                    continue  # player busted
             
             if move in ['S', 'D']:
-                break # time for the dealer
+                break  
 
-            
+        if GetValue(player) <= 21:
+            while GetValue(dealer) < 17:
+                print("\nDEALER HITS!")
+                dealer.append(deck.pop())
+                ShowHand(dealer, True)  # dealer's card
 
+                if GetValue(dealer) > 21:
+                    break  # dealer busted
 
-def ShowHand(cards):
-    for card in cards():
-        if card == BACKSIDE:
+                input("\nPress ENTER to continue...\n")
+
+        
+        ShowHand(dealer, False)
+        ShowHand(player, False)  
+
+        ppts = GetValue(player)
+        dpts = GetValue(dealer)
+
+        if dpts > 21:
+            print(f"\nDEALER'S BUSTED! YOU WIN {bet} Rs.")
+            money += bet
+        elif ppts > 21 or ppts < dpts:
+            print("\nYOU LOST")
+            money -= bet
+        elif ppts == dpts:
+            print("\nIT'S A TIE")
+
+        input("\nENTER to continue...\n")
+
+def ShowHand(cards, dealer=False): # function to reveal the card of dealer/player
+
+    if dealer:
+        print("\nDEALER'S HAND:")
+    else:
+        print("\nYOUR HAND:")
+    
+    for i, card in enumerate(cards):
+        if i == 0 and dealer:
             print("HIDDEN CARD")
         else:
             rank, suit = card
-            print(f"you have {rank} of {suit}")
+            print(f"{rank} of {suit}")
+    print()
 
-def GetMove(player, money):
+def GetMove(player, money): # for hit, stand, double down validation
+
     while True:
         if len(player) == 2 and money > 0:
-            move = input("""(H)IT TO TAKE ANOTHER CARD
-                        (S)TAND TO STOP TAKING CARDS
-                        (D)OUBLE DOWN {ONLY FOR FIRST TIME!}""")
+            move = input("\n(H)IT, (S)TAND, or (D)OUBLE DOWN? ").upper().strip()
             if move in ["H", "S", "D"]:
                 return move
         else:
-            move = input("""(H)IT TO TAKE ANOTHER CARD
-                        (S)TAND TO STOP TAKING CARDS""")
+            move = input("\n(H)IT or (S)TAND? ").upper().strip()
             if move in ["H", "S"]:
                 return move
-            
-def GetValue(cards):
+
+def GetValue(cards): # calculation of points of cards dealt
+
     value = 0
     aces = 0
     for card in cards:
-        rank = card[0]  
+        rank = card[0]
         
-        if rank.isdigit():  
+        if rank.isdigit():
             value += int(rank)
-        elif rank in ['J', 'Q', 'K']:  
+        elif rank in ['J', 'Q', 'K']:
             value += 10
-        elif rank == "A":  
+        elif rank == "A":
             aces += 1
             value += 11  
     
@@ -100,20 +136,22 @@ def GetValue(cards):
         aces -= 1
     
     return value 
-def GetDeck():
+
+def GetDeck(): # func. to get a shuffled deck
+
     deck = []
-
     for suit in [HEARTS, DIAMONDS, SPADES, CLUBS]:
-        for rank in range(2, 11):
-            deck.append((str(rank), suit))
-    
-    return random.shuffle(deck)
+        for rank in list(map(str, range(2, 11))) + ['J', 'Q', 'K', 'A']:
+            deck.append((rank, suit))
+    random.shuffle(deck)
+    return deck
 
-def GetBet(maxBet):
+def GetBet(maxBet): # prompting user for betting the money
+
     while True:
-        bet = input("How much you bet?, or type QUIT\n>>").upper().strip()
+        bet = input("\nHow much do you bet? or type QUIT) -->> ").upper().strip()
         if bet == "QUIT":
-            sys.exit("END")
+            sys.exit("\nGAME OVER!")
         
         if not bet.isdigit():
             continue
@@ -122,3 +160,5 @@ def GetBet(maxBet):
         if 1 <= bet <= maxBet:
             return bet
 
+if __name__ == "__main__":
+    main()
