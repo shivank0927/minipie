@@ -15,7 +15,7 @@ def decipher(text):
             else:
                 decrypted.append(i)
 
-        print(f"Key #{key}: {''.join(decrypted)}")  # each key
+        print(f"Key #{key}: {''.join(decrypted)}")  # each key 
 
 def main():
     try:
