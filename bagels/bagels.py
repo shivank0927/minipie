@@ -17,7 +17,7 @@ def game(level, digits):
     computer = str(random.randint(10**(digits - 1), 10**digits - 1))
     count = 1
     tries = 10
-    
+     
     if level == 1:
         print(LevelOneRules())
     elif level == 2:
