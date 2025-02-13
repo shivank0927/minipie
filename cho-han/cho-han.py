@@ -10,7 +10,9 @@ def main():
             print("error in bet")
         elif bet == ".quit":
             sys.exit(".quitted")
-
+        else:
+            while True:
+                pass
         pass
 
 
