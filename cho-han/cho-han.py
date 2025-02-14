@@ -10,6 +10,9 @@ def main():
     rounds = 5 
 
     while True:
+
+        print(f"You have {money} rs.\n")
+
         if money < 0:
             sys.exit("You're broke")
         bet = getbet()
@@ -43,7 +46,7 @@ def main():
 
 def getbet():
     while True:
-        bet = input("Place your bet (1-10,000) or type .quit to exit: ").strip()
+        bet = input("place your bet or type .quit to exit: ").strip()
         if bet.lower() == ".quit":
             sys.exit("Thanks for playing!")
         if bet.isdigit():
