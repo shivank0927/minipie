@@ -1,0 +1,6 @@
+This program displays a digital timer that
+counts down to zero. Rather than render
+numeric characters directly, the sevseg.py
+module from Project 64, “Seven-Segment
+Display Module,” generates the drawings for each
+digit.
