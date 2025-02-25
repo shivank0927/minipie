@@ -1,0 +1,3 @@
+This math quiz program rolls two to six
+dice whose sides you must add up as quickly
+as possible.
