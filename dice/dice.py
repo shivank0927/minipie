@@ -16,20 +16,6 @@ PENALTY = -1
 
 def main():
     while True:
-
-        random.shuffle(faces)
-
-        one = random.choice(faces)
-        two = random.choice(faces)
-        three = random.choice(faces)
-        four = random.choice(faces)
-        five = random.choice(faces)
-        six = random.choice(faces)
-
-        
-        
-        print(one, two, three, four, five, six, sep="")
-
         time.sleep(1)
 
 if __name__ == "__main__":
